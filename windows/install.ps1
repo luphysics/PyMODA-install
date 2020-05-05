@@ -1,5 +1,3 @@
-# Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/luphysics/PyMODA/dev/dist/windows/install.ps1')) 
-
 Write-Output "Downloading PyMODA. Please wait, this may take over a minute..."
 
 $url = "https://github.com/luphysics/PyMODA/releases/latest/download/PyMODA-win64.zip"
@@ -42,7 +40,9 @@ $responseStream.Dispose()
 
 Write-Output "Extracting PyMODA..."
 
-mkdir -Force "$targetDir\PyMODA"
+# Assign a variable to suppress output from 'mkdir'.
+$output = mkdir -Force "$targetDir\PyMODA"
+
 rm -r "$targetDir\PyMODA"
 
 Add-Type -AssemblyName System.IO.Compression.FileSystem
