@@ -1,5 +1,5 @@
 echo "Downloading PyMODA. Please wait, this may take over a minute..."
-curl -fsSL "https://github.com/luphysics/PyMODA/releases/latest/download/PyMODA-macOS.dmg" -o PyMODA.dmg
+curl -fSL --progress-bar "https://github.com/luphysics/PyMODA/releases/latest/download/PyMODA-macOS.dmg" -o PyMODA.dmg
 
 echo "Mounting .dmg file..."
 sudo hdiutil attach PyMODA.dmg
