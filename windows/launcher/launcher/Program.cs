@@ -48,6 +48,7 @@ namespace launcher
             var dest = "pymoda.zip";
 
             var form = new MainForm(launcher, client, uri, dest);
+            form.StartPosition = FormStartPosition.CenterScreen;
 
             Application.Run(form);
         }
