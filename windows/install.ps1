@@ -1,11 +1,9 @@
-Write-Output "Downloading PyMODA. Please wait, this may take over a minute..."
+Write-Output "Downloading PyMODA..."
 
-$url = "https://github.com/luphysics/PyMODA/releases/latest/download/PyMODA-win64.zip"
+$url = "https://github.com/luphysics/pymoda-install/releases/latest/download/setup-win64.exe"
 
 $targetDir = "$env:AppData\PyMODA"
-$targetFile = "$targetDir\pymoda.zip"
-
-### Download the .zip file ###
+$targetFile = "$targetDir\setup.exe"
 
 $uri = New-Object "System.Uri" "$url"
 
@@ -29,27 +27,16 @@ while ($count -gt 0)
     Write-Progress -activity "Downloading file '$($url.split('/') | Select -Last 1)'" -status "Downloaded ($([System.Math]::Floor($downloadedBytes/1024))K of $($totalLength)K): " -PercentComplete ((([System.Math]::Floor($downloadedBytes/1024)) / $totalLength)  * 100)
 }
 
-Write-Progress -activity "Finished downloading file '$($url.split('/') | Select -Last 1)'"
-
 $targetStream.Flush()
 $targetStream.Close()
 $targetStream.Dispose()
 $responseStream.Dispose()
 
-### Extract the .zip file ###
-
-Write-Output "Extracting PyMODA..."
-
-# Assign a variable to suppress output from 'mkdir'.
-$output = mkdir -Force "$targetDir\PyMODA"
-
-rm -r "$targetDir\PyMODA"
-
-Add-Type -AssemblyName System.IO.Compression.FileSystem
-[System.IO.Compression.ZipFile]::ExtractToDirectory($targetFile, $targetDir)
+& "$targetFile" /VERYSILENT
 
 Write-Output "Cleaning up..."
+Start-Sleep -Seconds 4
+
 rm $targetFile
 
-Write-Output "Launching PyMODA..."
-& "$targetDir\PyMODA\PyMODA.exe" --create-shortcut
+Write-Output "Exiting."
