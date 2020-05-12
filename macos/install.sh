@@ -16,4 +16,4 @@ sudo hdiutil detach /Volumes/PyMODA
 rm PyMODA.dmg
 
 echo "Launching PyMODA..."
-open ~/.pymoda/PyMODA/PyMODA.app
+open ~/.pymoda/PyMODA/PyMODA.app --args --create-shortcut

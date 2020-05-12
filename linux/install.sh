@@ -12,4 +12,4 @@ echo "Cleaning up..."
 rm pymoda.tar.gz
 
 echo "Launching PyMODA..."
-~/.pymoda/PyMODA/PyMODA
+~/.pymoda/PyMODA/PyMODA --create-shortcut
