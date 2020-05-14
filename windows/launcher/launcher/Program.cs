@@ -21,7 +21,11 @@ namespace launcher
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var args = Environment.GetCommandLineArgs().Skip(1).ToArray();
+            var args = Environment
+                .GetCommandLineArgs()
+                .Skip(1)
+                .Append("--launcher")
+                .ToArray();
 
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var pymodaFolder = Path.Combine(appData, "PyMODA");
@@ -34,13 +38,16 @@ namespace launcher
             // If the directory exists, PyMODA is already installed.
             if (Directory.Exists(normalInstalledFolder)) 
             {
-                launcher = new Launcher(normalInstalledFolder, args);
+                // Get the folder containing the latest version.
+                var installFolder = getInstallFolder();
+
+                launcher = new Launcher(installFolder, args);
 
                 launcher.LaunchPyMODA();
                 return;
             }
 
-            launcher = new Launcher(normalInstalledFolder, args); // TODO
+            launcher = new Launcher(normalInstalledFolder, args);
 
             var client = new WebClient();
 
@@ -51,6 +58,21 @@ namespace launcher
             form.StartPosition = FormStartPosition.CenterScreen;
 
             Application.Run(form);
+        }
+
+        static string getInstallFolder()
+        {
+            var files = Directory.GetFiles(".");
+
+            foreach(string f in files)
+            {
+                Console.WriteLine(f);
+                if (f.StartsWith("latest-") || f.StartsWith(".\\latest-")) 
+                {
+                    return f.Replace("latest-", "");
+                }
+            }
+            return "PyMODA";
         }
     }
 }
