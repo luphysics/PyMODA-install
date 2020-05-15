@@ -5,6 +5,7 @@ echo "Extracting PyMODA..."
 
 mkdir -p ~/.pymoda/PyMODA
 rm -r ~/.pymoda/PyMODA
+mkdir -p ~/.pymoda/PyMODA
 
 tar -xvf pymoda.tar.gz -C ~/.pymoda/PyMODA/
 
